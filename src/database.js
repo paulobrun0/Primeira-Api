@@ -62,12 +62,11 @@ export class Database {
     }
   }
 
-  updateCompleted(table, id, data) {
+  updateCompleted(table, id) {
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
     if (rowIndex > -1) {
       const existingRow = this.#database[table][rowIndex]
-
       const newCompletedAt = existingRow.completed_at ? null : new Date()
 
       this.#database[table][rowIndex] = {
@@ -75,6 +74,7 @@ export class Database {
         completed_at: newCompletedAt,
         updated_at: new Date()
       }
+      this.#persist()
     }
   }
 
